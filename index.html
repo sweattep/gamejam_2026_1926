@@ -1,0 +1,47 @@
+
+<?xml-stylesheet href="../../../xsltforms/xsltforms.xsl" type="text/xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+   <title>Game</title>
+   <style type="text/css">
+      body {margin-left: 2em}
+      .row {display: block}
+      .cell {display: inline-block; height: 128px; width: 128px;
+             border: 1px solid black; margin: 0; padding: 0}
+      .xforms-repeat-item {display: inline}
+      .xforms-label {padding: 0}
+   </style>
+   <model xmlns="http://www.w3.org/2002/xforms">
+      <instance>
+	 <data xmlns="">
+	    <row><cell click="">6</cell><cell click="">2</cell><cell click="">3</cell><cell click="">5</cell></row>
+	    <row><cell click="">10</cell><cell click="">.</cell><cell click="">4</cell><cell click="">9</cell></row>
+	    <row><cell click="">11</cell><cell click="">7</cell><cell click="">8</cell><cell click="">13</cell></row>
+	    <row><cell click="">14</cell><cell click="">15</cell><cell click="">12</cell><cell click="">1</cell></row>
+	 </data>
+      </instance>
+      <bind ref="row/cell/@click" type="boolean"
+	    calculate="../following-sibling::cell[1]='.' or 
+		       ../preceding-sibling::cell[1]='.' or 
+		       ../../following-sibling::row[1]/cell[1+count(context()/../preceding-sibling::cell)]='.' or
+		       ../../preceding-sibling::row[1]/cell[1+count(context()/../preceding-sibling::cell)]='.'"
+	    />
+   </model>
+</head>
+<body>
+   <group xmlns="http://www.w3.org/2002/xforms">
+      <repeat ref="row" class="row"> 
+	 <repeat ref="cell">
+	    <trigger class="cell" appearance="minimal">
+	       <label><output value="if(.='.', 'blank', .)" mediatype="image/*"/></label>
+	       <action ev:event="DOMActivate" if="@click = true()">
+		  <setvalue ref="//cell[.='.']" value="context()"/>
+		  <setvalue ref="." value="'.'"/>
+	       </action>
+	    </trigger>
+	 </repeat>
+      </repeat>
+   </group>
+</body>
+</html>
