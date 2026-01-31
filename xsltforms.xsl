@@ -1268,7 +1268,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		<xsl:with-param name="body">
 			<xsl:choose>
 				<xsl:when test="starts-with(@mediatype,'image/') and @mediatype != 'image/svg+xml'">
+					<img>
 						<xsl:call-template name="comun"/>
+					</img>
 				</xsl:when>
 				<xsl:when test="namespace-uri(parent::*) = 'http://www.w3.org/2000/svg'"><xsl:element name="tspan" namespace="http://www.w3.org/2000/svg"><xsl:call-template name="comun"/><xsl:value-of select="$nbsp"/></xsl:element></xsl:when>
 				<xsl:otherwise><span><xsl:call-template name="comun"/><xsl:value-of select="$nbsp"/></span></xsl:otherwise>
@@ -5740,5 +5742,4 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		</xsl:call-template>
 	</xsl:if>
 </xsl:template>
-
 </xsl:stylesheet>
